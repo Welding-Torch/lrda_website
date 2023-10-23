@@ -17,4 +17,5 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>{children}</body>
     </html>
   );
+
 }
