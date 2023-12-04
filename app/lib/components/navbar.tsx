@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { User } from "../models/user_class";
-import SearchBar from "./search_bar";
 import { Button } from "@/components/ui/button";
 
 const user = User.getInstance();
@@ -41,9 +40,6 @@ export default function Navbar() {
             Where's Religion?
           </a>
         </Link>
-      </div>
-      <div className="w-full">
-        <SearchBar />
       </div>
       <div className="">
         {name ? (

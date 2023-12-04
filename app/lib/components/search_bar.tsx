@@ -23,7 +23,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex items-center w-full min-w-max">
+    <div className="flex items-center w-min min-w-max">
       <Input
         type="text"
         placeholder="Search..."
