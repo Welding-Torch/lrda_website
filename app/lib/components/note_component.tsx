@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Plate } from '@udecode/plate';
-import { Editor } from "@/components/plate-ui/editor";
+import { PlateEditor } from "@/components/plate-ui/plate-editor";
 import { Input } from "@/components/ui/input";
 import { Note } from "@/app/types";
 
@@ -55,9 +55,7 @@ export default function NoteEditor({ note }: NoteEditorProps) {
         <div className="overflow-auto">
           <div className="mt-2 border border-black p-4 rounded-lg bg-white">
             {/* Plate editor with initial value set */}
-            <Plate initialValue={initialValue}>
-              <Editor onChange={handleEditorChange} />
-            </Plate>
+            <PlateEditor/>
           </div>
         </div>
       </main>
