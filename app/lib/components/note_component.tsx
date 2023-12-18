@@ -11,6 +11,7 @@ import {
   createIndentPlugin,
   createStrikethroughPlugin,
   createItalicPlugin,
+  PlateElement,
 } from "@udecode/plate";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -23,8 +24,16 @@ type NoteEditorProps = {
   note?: Note;
 };
 
+type TElement = {
+  type: string;
+  children: Descendant[];
+  // Add any other properties that your elements require
+};
+
+
 export default function NoteEditor({ note }: NoteEditorProps) {
-  const [editorContent, setEditorContent] = useState<Descendant[]>([]);
+  const [editorContent, setEditorContent] = useState([]);
+  const [debugValue, setDebugValue] = useState<any>(editorContent);
   const [title, setTitle] = useState(note?.title || "");
   const [images, setImages] = useState<any>();
   const [time, setTime] = useState<Date | undefined>();
@@ -41,7 +50,7 @@ export default function NoteEditor({ note }: NoteEditorProps) {
 
       console.log(note.text);
       const serializedToSlate = htmlToSlate(note.text);
-      console.log(serializedToSlate);
+      console.log('THIS:',serializedToSlate);
       setEditorContent(serializedToSlate);
     }
   }, [note]);
@@ -61,11 +70,19 @@ export default function NoteEditor({ note }: NoteEditorProps) {
     setTitle(event.target.value);
   };
 
+  console.log("THIS GUY: ", editorContent);
+
   return (
     <div className="flex flex-col h-screen">
       <Input value={title} onChange={handleTitleChange} placeholder="Title" />
       <main className="flex-grow p-6 lg:p-4 w-full">
-        <Plate value={editorContent} plugins={plugins}>
+        <Plate
+          value={editorContent}
+          plugins={plugins}
+          onChange={(newValue) => {
+            setDebugValue(newValue);
+          }}
+        >
           <Editor placeholder="Start Typing Here..." />
         </Plate>
       </main>
