@@ -15,7 +15,6 @@ import { Editor } from "@/components/plate-ui/editor"
 import { useEditorState, Plate } from '@udecode/plate';
 import { useState, useEffect } from "react";
 import { stateFromHTML } from "draft-js-import-html";
-import { stateToHTML } from "draft-js-export-html";
 import { Button } from "@/components/ui/button";
 import { Note } from "@/app/types";
 import { Input } from "@/components/ui/input";

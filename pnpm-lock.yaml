@@ -128,6 +128,18 @@ dependencies:
   react-test-renderer:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
+  slate:
+    specifier: ^0.101.4
+    version: 0.101.4
+  slate-history:
+    specifier: ^0.100.0
+    version: 0.100.0(slate@0.101.4)
+  slate-hyperscript:
+    specifier: ^0.100.0
+    version: 0.100.0(slate@0.101.4)
+  slate-react:
+    specifier: ^0.101.3
+    version: 0.101.3(react-dom@18.2.0)(react@18.2.0)(slate@0.101.4)
   tailwind-merge:
     specifier: ^2.0.0
     version: 2.0.0
