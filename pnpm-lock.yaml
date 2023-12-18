@@ -26,6 +26,9 @@ dependencies:
   '@radix-ui/react-slot':
     specifier: ^1.0.2
     version: 1.0.2(@types/react@18.2.22)(react@18.2.0)
+  '@slate-serializers/html':
+    specifier: ^2.1.6
+    version: 2.1.6
   '@testing-library/jest-dom':
     specifier: ^6.1.4
     version: 6.1.4(@types/jest@29.5.5)(jest@29.7.0)
@@ -56,6 +59,9 @@ dependencies:
   '@udecode/plate-common':
     specifier: ^27.0.0
     version: 27.0.0(@types/react@18.2.22)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.101.3)(slate@0.101.4)
+  '@udecode/plate-serializer-html':
+    specifier: ^27.0.0
+    version: 27.0.0(@types/react@18.2.22)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.101.3)(slate@0.101.4)
   autoprefixer:
     specifier: 10.4.15
     version: 10.4.15(postcss@8.4.31)
@@ -79,10 +85,10 @@ dependencies:
     version: 0.11.7(react-dom@18.2.0)(react@18.2.0)
   draft-js-export-html:
     specifier: ^1.4.1
-    version: 1.4.1(draft-js@0.11.7)(immutable@3.7.6)
+    version: 1.4.1(draft-js@0.11.7)(immutable@3.8.2)
   draft-js-import-html:
     specifier: ^1.4.1
-    version: 1.4.1(draft-js@0.11.7)(immutable@3.7.6)
+    version: 1.4.1(draft-js@0.11.7)(immutable@3.8.2)
   enzyme:
     specifier: ^3.11.0
     version: 3.11.0
@@ -137,6 +143,9 @@ dependencies:
   slate-hyperscript:
     specifier: ^0.100.0
     version: 0.100.0(slate@0.101.4)
+  slate-plain-serializer:
+    specifier: ^0.7.13
+    version: 0.7.13(immutable@3.8.2)(slate@0.101.4)
   slate-react:
     specifier: ^0.101.3
     version: 0.101.3(react-dom@18.2.0)(react@18.2.0)(slate@0.101.4)
@@ -2140,6 +2149,48 @@ packages:
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
     dependencies:
       '@sinonjs/commons': 3.0.0
+    dev: false
+
+  /@slate-serializers/dom@2.1.6:
+    resolution: {integrity: sha512-07jjh2gIuyBzcYT79MHxroTvKN39Ng/wbfGOEdIfqvSMDbTTSSy0UhxvSbBFABN8113ngv8l9zHU1ExYsCYcGQ==}
+    dependencies:
+      '@slate-serializers/utilities': 2.1.5
+      css-select: 5.1.0
+      dom-serializer: 2.0.0
+      domhandler: 5.0.3
+      domutils: 3.1.0
+      html-entities: 2.4.0
+      htmlparser2: 7.2.0
+      postcss: 8.4.31
+      postcss-js: 4.0.1(postcss@8.4.31)
+      slate: 0.94.1
+      tslib: 2.5.0
+    dev: false
+
+  /@slate-serializers/html@2.1.6:
+    resolution: {integrity: sha512-OrQvIrE2jCYOWnlE5MCKff6MjkTSqzu8lEl9+Zrddenxs35xwAoAenPiuUM5kmsiep5hpy9gyCgGKFk7P8retQ==}
+    dependencies:
+      '@slate-serializers/dom': 2.1.6
+      '@slate-serializers/utilities': 2.1.5
+      css-select: 5.1.0
+      dom-serializer: 2.0.0
+      domhandler: 5.0.3
+      domutils: 3.1.0
+      html-entities: 2.4.0
+      htmlparser2: 7.2.0
+      postcss: 8.4.31
+      postcss-js: 4.0.1(postcss@8.4.31)
+      slate: 0.94.1
+      slate-hyperscript: 0.77.0(slate@0.94.1)
+      tslib: 2.5.0
+    dev: false
+
+  /@slate-serializers/utilities@2.1.5:
+    resolution: {integrity: sha512-Sq156nb2tdDrP+nCsJyj0uSQY0bDUcKR27oGI2XVNR/k37VQESbXAr6gVzSrobd7Xgjl3CN99RjsD4p3Qqv2HA==}
+    dependencies:
+      postcss: 8.4.31
+      postcss-js: 4.0.1(postcss@8.4.31)
+      tslib: 2.5.0
     dev: false
 
   /@swc/helpers@0.5.2:
@@ -4343,6 +4394,14 @@ packages:
     resolution: {integrity: sha512-X7BJ2yElsnOJ30pZF4uIIDfBEVgF4XEBxL9Bxhy6dnrm5hkzqmsWHGTiHqRiITNhMyFLyAiWndIJP7Z1NTteDg==}
     dev: false
 
+  /dom-serializer@1.4.1:
+    resolution: {integrity: sha512-VHwB3KfrcOOkelEG2ZOfxqLZdfkil8PtJi4P8N2MMXucZq2yLp75ClViUlOVwyoHEDjYU433Aq+5zWP61+RGag==}
+    dependencies:
+      domelementtype: 2.3.0
+      domhandler: 4.3.1
+      entities: 2.2.0
+    dev: false
+
   /dom-serializer@2.0.0:
     resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
     dependencies:
@@ -4362,11 +4421,26 @@ packages:
       webidl-conversions: 7.0.0
     dev: false
 
+  /domhandler@4.3.1:
+    resolution: {integrity: sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==}
+    engines: {node: '>= 4'}
+    dependencies:
+      domelementtype: 2.3.0
+    dev: false
+
   /domhandler@5.0.3:
     resolution: {integrity: sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==}
     engines: {node: '>= 4'}
     dependencies:
       domelementtype: 2.3.0
+    dev: false
+
+  /domutils@2.8.0:
+    resolution: {integrity: sha512-w96Cjofp72M5IIhpjgobBimYEfoPjx1Vx0BSX9P30WBdZW2WIKU0T1Bd0kz2eNZ9ikjKgHbEyKx8BB6H1L3h3A==}
+    dependencies:
+      dom-serializer: 1.4.1
+      domelementtype: 2.3.0
+      domhandler: 4.3.1
     dev: false
 
   /domutils@3.1.0:
@@ -4390,48 +4464,48 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /draft-js-export-html@1.4.1(draft-js@0.11.7)(immutable@3.7.6):
+  /draft-js-export-html@1.4.1(draft-js@0.11.7)(immutable@3.8.2):
     resolution: {integrity: sha512-G4VGBSalPowktIE4wp3rFbhjs+Ln9IZ2FhXeHjsZDSw0a2+h+BjKu5Enq+mcsyVb51RW740GBK8Xbf7Iic51tw==}
     peerDependencies:
       draft-js: '>=0.10.0'
       immutable: 3.x.x
     dependencies:
       draft-js: 0.11.7(react-dom@18.2.0)(react@18.2.0)
-      draft-js-utils: 1.4.1(draft-js@0.11.7)(immutable@3.7.6)
-      immutable: 3.7.6
+      draft-js-utils: 1.4.1(draft-js@0.11.7)(immutable@3.8.2)
+      immutable: 3.8.2
     dev: false
 
-  /draft-js-import-element@1.4.0(draft-js@0.11.7)(immutable@3.7.6):
+  /draft-js-import-element@1.4.0(draft-js@0.11.7)(immutable@3.8.2):
     resolution: {integrity: sha512-WmYT5PrCm47lGL5FkH6sRO3TTAcn7qNHsD3igiPqLG/RXrqyKrqN4+wBgbcT2lhna/yfWTRtgzAbQsSJoS1Meg==}
     peerDependencies:
       draft-js: '>=0.10.0'
       immutable: 3.x.x
     dependencies:
       draft-js: 0.11.7(react-dom@18.2.0)(react@18.2.0)
-      draft-js-utils: 1.4.1(draft-js@0.11.7)(immutable@3.7.6)
-      immutable: 3.7.6
+      draft-js-utils: 1.4.1(draft-js@0.11.7)(immutable@3.8.2)
+      immutable: 3.8.2
       synthetic-dom: 1.4.0
     dev: false
 
-  /draft-js-import-html@1.4.1(draft-js@0.11.7)(immutable@3.7.6):
+  /draft-js-import-html@1.4.1(draft-js@0.11.7)(immutable@3.8.2):
     resolution: {integrity: sha512-KOZmtgxZriCDgg5Smr3Y09TjubvXe7rHPy/2fuLSsL+aSzwUDwH/aHDA/k47U+WfpmL4qgyg4oZhqx9TYJV0tg==}
     peerDependencies:
       draft-js: '>=0.10.0'
       immutable: 3.x.x
     dependencies:
       draft-js: 0.11.7(react-dom@18.2.0)(react@18.2.0)
-      draft-js-import-element: 1.4.0(draft-js@0.11.7)(immutable@3.7.6)
-      immutable: 3.7.6
+      draft-js-import-element: 1.4.0(draft-js@0.11.7)(immutable@3.8.2)
+      immutable: 3.8.2
     dev: false
 
-  /draft-js-utils@1.4.1(draft-js@0.11.7)(immutable@3.7.6):
+  /draft-js-utils@1.4.1(draft-js@0.11.7)(immutable@3.8.2):
     resolution: {integrity: sha512-xE81Y+z/muC5D5z9qWmKfxEW1XyXfsBzSbSBk2JRsoD0yzMGGHQm/0MtuqHl/EUDkaBJJLjJ2EACycoDMY/OOg==}
     peerDependencies:
       draft-js: '>=0.10.0'
       immutable: 3.x.x
     dependencies:
       draft-js: 0.11.7(react-dom@18.2.0)(react@18.2.0)
-      immutable: 3.7.6
+      immutable: 3.8.2
     dev: false
 
   /draft-js@0.11.7(react-dom@18.2.0)(react@18.2.0):
@@ -4460,6 +4534,15 @@ packages:
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
+    dev: false
+
+  /entities@2.2.0:
+    resolution: {integrity: sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==}
+    dev: false
+
+  /entities@3.0.1:
+    resolution: {integrity: sha512-WiyBqoomrwMdFG1e0kqvASYfnlb0lp8M5o5Fw2OFq1hNZxxcNk8Ik0Xm7LxzBhuidnZB/UtBqVCgUz3kBOP51Q==}
+    engines: {node: '>=0.12'}
     dev: false
 
   /entities@4.5.0:
@@ -5008,6 +5091,15 @@ packages:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
     dev: false
 
+  /htmlparser2@7.2.0:
+    resolution: {integrity: sha512-H7MImA4MS6cw7nbyURtLPO1Tms7C5H602LRETv95z1MxO/7CP7rDVROehUYeYBUYEON94NXXDEPmZuq+hX4sog==}
+    dependencies:
+      domelementtype: 2.3.0
+      domhandler: 4.3.1
+      domutils: 2.8.0
+      entities: 3.0.1
+    dev: false
+
   /htmlparser2@8.0.2:
     resolution: {integrity: sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==}
     dependencies:
@@ -5061,9 +5153,18 @@ packages:
     resolution: {integrity: sha512-pwupu3eWfouuaowscykeckFmVTpqbzW+rXFCX8rQLkZzM9ftBmU/++Ra+o+L27mz03zJTlyV4UUr+fdKNffo4A==}
     dev: false
 
+  /immer@9.0.21:
+    resolution: {integrity: sha512-bc4NBHqOqSfRW7POMkHd51LvClaeMXpm8dx0e8oE2GORbq5aRK7Bxl4FyzVLdGtLmvLKL7BTDBG5ACQm4HWjTA==}
+    dev: false
+
   /immutable@3.7.6:
     resolution: {integrity: sha512-AizQPcaofEtO11RZhPPHBOJRdo/20MKQF9mBLnVkBoyHi1/zXK8fzVdnEpSV9gxqtnh6Qomfp3F0xT5qP/vThw==}
     engines: {node: '>=0.8.0'}
+
+  /immutable@3.8.2:
+    resolution: {integrity: sha512-15gZoQ38eYjEjxkorfbcgBKBL6R7T459OuK+CpcWt7O3KF4uPCx2tD0uFETlUDIyo+1789crbMhTvQBSR5yBMg==}
+    engines: {node: '>=0.10.0'}
+    dev: false
 
   /import-local@3.1.0:
     resolution: {integrity: sha512-ASB07uLtnDs1o6EHjKpX34BKYDSqnFerfTOJL2HvMqF70LnxpjkzDB8J44oT9pu4AMPkQwf8jl6szgvNd2tRIg==}
@@ -7055,6 +7156,25 @@ packages:
       slate: 0.101.4
     dev: false
 
+  /slate-hyperscript@0.77.0(slate@0.94.1):
+    resolution: {integrity: sha512-M6uRpttwKnosniQORNPYQABHQ9XWC7qaSr/127LWWPjTOR5MSSwrHGrghN81BhZVqpICHrI7jkPA2813cWdHNA==}
+    peerDependencies:
+      slate: '>=0.65.3'
+    dependencies:
+      is-plain-object: 5.0.0
+      slate: 0.94.1
+    dev: false
+
+  /slate-plain-serializer@0.7.13(immutable@3.8.2)(slate@0.101.4):
+    resolution: {integrity: sha512-TtrlaslxQBEMV0LYdf3s7VAbTxRPe1xaW10WNNGAzGA855/0RhkaHjKkQiRjHv5rvbRleVf7Nxr9fH+4uErfxQ==}
+    peerDependencies:
+      immutable: '>=3.8.1'
+      slate: '>=0.46.0 <0.50.0'
+    dependencies:
+      immutable: 3.8.2
+      slate: 0.101.4
+    dev: false
+
   /slate-react@0.101.3(react-dom@18.2.0)(react@18.2.0)(slate@0.101.4):
     resolution: {integrity: sha512-KMXK9FLeS7HYhhoVcI8SUi4Qp1I9C1lTQ2EgbPH95sVXfH/vq+hbhurEGIGCe0VQ9Opj4rSKJIv/g7De1+nJMA==}
     peerDependencies:
@@ -7080,6 +7200,14 @@ packages:
     resolution: {integrity: sha512-8LazZrNDsYFKDg1wpb0HouAfX5Pw/UmOZ/vIrtqD2GSCDZvraOkV2nVJ9Ery8kIlsU1jeybwgcaCy4KkVwfvEg==}
     dependencies:
       immer: 10.0.3
+      is-plain-object: 5.0.0
+      tiny-warning: 1.0.3
+    dev: false
+
+  /slate@0.94.1:
+    resolution: {integrity: sha512-GH/yizXr1ceBoZ9P9uebIaHe3dC/g6Plpf9nlUwnvoyf6V1UOYrRwkabtOCd3ZfIGxomY4P7lfgLr7FPH8/BKA==}
+    dependencies:
+      immer: 9.0.21
       is-plain-object: 5.0.0
       tiny-warning: 1.0.3
     dev: false
@@ -7418,6 +7546,10 @@ packages:
       semver: 7.5.4
       typescript: 5.2.2
       yargs-parser: 21.1.1
+    dev: false
+
+  /tslib@2.5.0:
+    resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
     dev: false
 
   /tslib@2.6.2:

@@ -1,32 +1,31 @@
 "use client";
-import {
-  FontBoldIcon,
-  FontItalicIcon,
-  UnderlineIcon,
-  TextAlignLeftIcon,
-  TextAlignCenterIcon,
-  TextAlignRightIcon,
-  QuoteIcon,
-  ChatBubbleIcon,
-  ListBulletIcon,
-} from "@radix-ui/react-icons";
-import { Textarea } from "@/components/ui/textarea"
-import BasicEditor from "@/components/plate-ui/basic_editor";
+import { Textarea } from "@/components/ui/textarea";
 import { Editor } from "@/components/plate-ui/editor";
-import { useEditorState, Plate } from '@udecode/plate';
+import {
+  Plate,
+  createDeserializeHtmlPlugin,
+  createBlockquotePlugin,
+  createDeletePlugin,
+  createBoldPlugin,
+  createUnderlinePlugin,
+  createIndentPlugin,
+  createStrikethroughPlugin,
+  createItalicPlugin,
+} from "@udecode/plate";
 import { useState, useEffect } from "react";
-import { stateFromHTML } from "draft-js-import-html";
 import { Button } from "@/components/ui/button";
 import { Note } from "@/app/types";
 import { Input } from "@/components/ui/input";
+import { slateToHtml, htmlToSlate } from "@slate-serializers/html";
+import { Descendant } from "slate";
 
 type NoteEditorProps = {
   note?: Note;
 };
 
 export default function NoteEditor({ note }: NoteEditorProps) {
-  const [editor] = useState(useEditorState(note?.text || ''));
-  const [title, setTitle] = useState(note?.title || '');
+  const [editorContent, setEditorContent] = useState<Descendant[]>([]);
+  const [title, setTitle] = useState(note?.title || "");
   const [images, setImages] = useState<any>();
   const [time, setTime] = useState<Date | undefined>();
   const [longitude, setLongitude] = useState<string | undefined>();
@@ -40,13 +39,23 @@ export default function NoteEditor({ note }: NoteEditorProps) {
       setLongitude(note.longitude);
       setLatitude(note.latitude);
 
-      const contentState = stateFromHTML(note.text);
+      console.log(note.text);
+      const serializedToSlate = htmlToSlate(note.text);
+      console.log(serializedToSlate);
+      setEditorContent(serializedToSlate);
     }
   }, [note]);
 
-  const handleEditorChange = (newEditorState) => {
-    // Update your editor state
-  };
+  const plugins = [
+    createDeserializeHtmlPlugin(),
+    createBlockquotePlugin(),
+    createDeletePlugin(),
+    createBoldPlugin(),
+    createUnderlinePlugin(),
+    createIndentPlugin(),
+    createStrikethroughPlugin(),
+    createItalicPlugin(),
+  ];
 
   const handleTitleChange = (event: any) => {
     setTitle(event.target.value);
@@ -54,36 +63,12 @@ export default function NoteEditor({ note }: NoteEditorProps) {
 
   return (
     <div className="flex flex-col h-screen">
-    <Input
-      value={title}
-      onChange={handleTitleChange}
-      placeholder="Title"
-    />
-    <main className="flex-grow p-6 lg:p-4 w-full">
-      <div className="max-w-full flex-grow overflow-auto">
-        <div className="mt-2 border border-black p-4 rounded-lg w-full bg-white">
-          <Plate>
-            <Editor
-              editor={editor}
-              onChange={handleEditorChange} 
-            />
-          </Plate>
-        </div>
-      </div>
-    </main>
-  </div>
+      <Input value={title} onChange={handleTitleChange} placeholder="Title" />
+      <main className="flex-grow p-6 lg:p-4 w-full">
+        <Plate value={editorContent} plugins={plugins}>
+          <Editor placeholder="Start Typing Here..." />
+        </Plate>
+      </main>
+    </div>
   );
-};
-
-
-const editorStyles = {
-  border: "1px solid black",
-  padding: "10px",
-  borderRadius: "4px",
-  minHeight: "300px",
-  width: "100%", 
-  color: "black",
-  backgroundColor: "white",
-  overflow: "auto", 
-};
-
+}
