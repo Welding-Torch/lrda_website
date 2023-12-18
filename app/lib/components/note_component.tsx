@@ -63,9 +63,7 @@ export default function NoteEditor({ note }: NoteEditorProps) {
         <div className="mt-2 border border-black p-4 rounded-lg w-full bg-white">
           <BasicEditor
             editor={editor}
-            onChange={handleEditorChange}
-            placeholder="Start writing your notes here . . ."
-            
+            onChange={handleEditorChange} 
           />
         </div>
       </div>

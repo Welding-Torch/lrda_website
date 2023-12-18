@@ -4,7 +4,7 @@ import { Editor } from './editor';
 export default function BasicEditor() {
   return (
     <Plate>
-      <Editor placeholder="Type..." />
+      <Editor placeholder="Start typing..." />
     </Plate>
   );
 }
