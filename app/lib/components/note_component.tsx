@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Plate } from '@udecode/plate';
-import { PlateEditor } from "@/components/plate-ui/plate-editor";
+import { useEditor, EditorContent, Editor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
 import { Input } from "@/components/ui/input";
 import { Note } from "@/app/types";
 
@@ -10,38 +10,26 @@ type NoteEditorProps = {
 };
 
 export default function NoteEditor({ note }: NoteEditorProps) {
-  // Initialize title from note prop
   const [title, setTitle] = useState(note?.title || '');
-
-  // Convert note text to Plate's initial value format
-  const initialValue = note ? [
-    {
-      type: 'p',
-      children: [{ text: note.text }],
-    },
-  ] : [
-    // Default initial value if note is not provided
-    {
-      type: 'p',
-      children: [{ text: note?.text || "" }],
-    },
-  ];
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: note?.BodyText || '<p>Type your text...</p>',
+  });
 
   useEffect(() => {
-    // Update the title state if the note prop changes
-    if (note) {
+    if (note && editor) {
       setTitle(note.title);
+      editor.commands.setContent(note.BodyText);
     }
-  }, [note]);
-
-  const handleEditorChange = (newEditorState) => {
-    // This function will update the editor state
-    // Depending on Plate's setup, you might need to handle serialization here
-  };
+  }, [note, editor]);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
+
+  if (!editor) {
+    return null; // or a loading indicator
+  }
 
   return (
     <div className="flex flex-col h-screen">
@@ -51,15 +39,18 @@ export default function NoteEditor({ note }: NoteEditorProps) {
         placeholder="Title"
         className="m-4"
       />
+      <div className="flex justify-center space-x-2 p-2">
+        <button onClick={() => editor.chain().focus().toggleBold().run()} className="btn">Bold</button>
+        <button onClick={() => editor.chain().focus().toggleItalic().run()} className="btn">Italic</button>
+        <button onClick={() => editor.chain().focus().toggleUnderline().run()} className="btn">Underline</button>
+      </div>
       <main className="flex-grow p-6">
         <div className="overflow-auto">
           <div className="mt-2 border border-black p-4 rounded-lg bg-white">
-            {/* Plate editor with initial value set */}
-            <PlateEditor/>
+            <EditorContent editor={editor} />
           </div>
         </div>
       </main>
-      {/* Additional components such as buttons for saving or editing notes can go here */}
     </div>
   );
 }
