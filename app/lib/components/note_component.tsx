@@ -1,53 +1,31 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useEditor, EditorContent, Editor } from "@tiptap/react";
+import React, { useState, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
-import { Underline } from "@tiptap/extension-underline";
 import { Note } from "@/app/types";
-import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
 import TimePicker from "./time_picker";
-import BulletList from '@tiptap/extension-bullet-list'
-import ListItem from '@tiptap/extension-list-item'
-import OrderedList from '@tiptap/extension-ordered-list'
-import Blockquote from "@tiptap/extension-blockquote";
-import History from "@tiptap/extension-history";
-import Bold from '@tiptap/extension-bold'
-import Italic from '@tiptap/extension-italic'
-import ToolBar from "./toolbar";
+import {
+  MenuButtonBold,
+  MenuButtonItalic,
+  MenuControlsContainer,
+  MenuDivider,
+  MenuSelectHeading,
+  RichTextEditor,
+  type RichTextEditorRef,
+} from "mui-tiptap";
+import StarterKit from "@tiptap/starter-kit";
 
 type NoteEditorProps = {
   note?: Note;
 };
 
 export default function NoteEditor({ note }: NoteEditorProps) {
+  console.log("Here is my note: ", note);
   const [title, setTitle] = useState(note?.title || "");
-  const [images, setImages] = useState<any>();
-  const [time, setTime] = useState<Date | undefined>();
-  const [longitude, setLongitude] = useState<string | undefined>();
-  const [latitude, setLatitude] = useState<string | undefined>();
-
-  const editor = useEditor({
-    extensions: [Document, Bold, Italic, History, Paragraph, Text, Underline, OrderedList,
-      ListItem.configure({
-        HTMLAttributes: {
-          class: 'pl-4 border-l border-l-[value]',
-        },
-      }),
-      BulletList.configure({
-        HTMLAttributes: {
-          class: "pl-4 border-l border-l-[value]"
-        }
-      }), 
-      Blockquote.configure({
-        HTMLAttributes: {
-          className: "border-l-6 border-tan bg-tan bg-opacity-[0.5] pl-4"
-        }
-      })
-    ],
-    content: note?.text || "<p>Type your text...</p>",
-  });
+  const [images, setImages] = useState(note?.media || []);
+  const [time, setTime] = useState(note?.time || new Date());
+  const [longitude, setLongitude] = useState(note?.longitude || '');
+  const [latitude, setLatitude] = useState(note?.latitude || '');
+  const rteRef = useRef<RichTextEditorRef>(null);
 
   useEffect(() => {
     if (note) {
@@ -56,11 +34,11 @@ export default function NoteEditor({ note }: NoteEditorProps) {
       setTime(note.time);
       setLongitude(note.longitude);
       setLatitude(note.latitude);
-      if (editor) {
-        editor.commands.setContent(note.text);
+      if (rteRef.current) {
+        rteRef.current.content = note.text;
       }
     }
-  }, [note, editor]);
+  }, [note]);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -75,12 +53,22 @@ export default function NoteEditor({ note }: NoteEditorProps) {
         className="m-4"
       />
       <main className="flex-grow p-6">
-        <TimePicker initialDate={time || new Date()} />
+        <TimePicker initialDate={time} onChange={(newTime) => setTime(newTime)} />
         <div className="overflow-auto">
-          <ToolBar editor={editor}/>
-          <div className="mt-2 border border-black p-4 rounded-lg bg-white">
-            <EditorContent editor={editor} />
-          </div>
+          <RichTextEditor
+            ref={rteRef}
+            extensions={[StarterKit]}
+            content={note?.text || "<p>Type your text...</p>"}
+            renderControls={() => (
+              <MenuControlsContainer>
+                <MenuSelectHeading />
+                <MenuDivider />
+                <MenuButtonBold />
+                <MenuButtonItalic />
+                {/* Add more controls of your choosing here */}
+              </MenuControlsContainer>
+            )}
+          />
         </div>
       </main>
     </div>
