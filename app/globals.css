@@ -85,7 +85,6 @@
 
   ul, ol {
     list-style: none;
-    padding: 0 1rem;
-    border-left: 4px solid black;
+    padding: 0 2rem;
   }
 }

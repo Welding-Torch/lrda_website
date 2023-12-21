@@ -34,17 +34,26 @@ export default function NoteEditor({ note }: NoteEditorProps) {
       setTime(note.time);
       setLongitude(note.longitude);
       setLatitude(note.latitude);
-      if (rteRef.current) {
-        rteRef.current.content = note.text;
-      }
+    
     }
   }, [note]);
+
+  useEffect(() => {
+    if (rteRef.current?.editor && note?.text) {
+      rteRef.current.editor.commands.setContent(note.text);
+    }
+    else if (rteRef.current?.editor && !note?.text) {
+      rteRef.current.editor.commands.setContent("<p>Type your text...</p>");
+    }
+  }, [note?.text]);
+  
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
 
   return (
+    console.log("Body text: ", note?.text),
     <div className="flex flex-col h-screen">
       <Input
         value={title}
@@ -58,7 +67,7 @@ export default function NoteEditor({ note }: NoteEditorProps) {
           <RichTextEditor
             ref={rteRef}
             extensions={[StarterKit]}
-            content={note?.text || "<p>Type your text...</p>"}
+            content= {"<p>Type your text...</p>"}
             renderControls={() => (
               <MenuControlsContainer>
                 <MenuSelectHeading />
