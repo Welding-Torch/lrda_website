@@ -43,7 +43,6 @@ export default function NoteEditor({ note : initialNote }: NoteEditorProps) {
       setLatitude(note.latitude);
       setTags(note.tags);
       setAudio(note.audio);
-      setCounter(counter + 1);
     }
   }, [note]);
 
@@ -98,7 +97,7 @@ export default function NoteEditor({ note : initialNote }: NoteEditorProps) {
   return (
     console.log("Body text: ", note?.text),
     (
-      <div className="flex flex-col h-screen" key={counter}>
+      <div className="flex flex-col h-screen">
         <Input
           value={title}
           onChange={handleTitleChange}
@@ -114,7 +113,7 @@ export default function NoteEditor({ note : initialNote }: NoteEditorProps) {
         />
         <main className="flex-grow p-6">
           <div className="mt-3">
-            <AudioPicker audioArray={audio || []} setAudio={setAudio} />
+            <AudioPicker audioArray={audio || []}/>
           </div>
           <div className="mt-3">
             <TimePicker initialDate={time || new Date()} onTimeChange = {handleTimeChange} />

@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/input";
 
 type AudioPickerProps = {
   audioArray: AudioType[];
-  setAudio: React.Dispatch<React.SetStateAction<AudioType[]>>;
+  setAudio?: React.Dispatch<React.SetStateAction<AudioType[]>>;
 };
 
 const AudioPicker: React.FC<AudioPickerProps> = ({ audioArray, setAudio }) => {
