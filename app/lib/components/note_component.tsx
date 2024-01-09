@@ -152,24 +152,27 @@ export default function NoteEditor({ note: initialNote, isNewNote }: NoteEditorP
     if (note?.id) {
       try {
         const userId = await user.getId();
-        const success = await ApiService.deleteNoteFromAPI(
-          note!.id,
-          userId || ""
-        );
+        const success = await ApiService.deleteNoteFromAPI(note.id, userId || "");
         if (success) {
-          toast("Error", {
-            description: "Note successfully Deleted.",
+          toast("Note successfully Deleted.", {
+            description: "Your note was deleted successfully.",
             duration: 4000,
           });
           return true;
+        } else {
+          // Handle the case where success is false but not an error thrown
+          toast("Error", {
+            description: "Unknown error occurred. Please try again later.",
+            duration: 4000,
+          });
+          return false;
         }
       } catch (error) {
+        console.error("Error deleting note:", error);
         toast("Error", {
-          description:
-            "Failed to delete note. System failure. Try again later.",
+          description: "Failed to delete note. System failure. Try again later.",
           duration: 4000,
         });
-        console.error("Error deleting note:", error);
         return false;
       }
     } else {
@@ -177,8 +180,10 @@ export default function NoteEditor({ note: initialNote, isNewNote }: NoteEditorP
         description: "You must first save your note, before deleting it.",
         duration: 4000,
       });
+      return false;
     }
-  };
+};
+
 
   return (
     console.log("Body text: ", note?.text),
@@ -212,12 +217,6 @@ export default function NoteEditor({ note: initialNote, isNewNote }: NoteEditorP
               <AlertDialogTrigger asChild>
                 <button
                   className="hover:text-red-500 flex justify-center items-center w-full"
-                  onClick={() => {
-                    toast("Demo Note", {
-                      description: "You cannot delete in Demo Mode.",
-                      duration: 2000,
-                    });
-                  }}
                 >
                   <FileX2 className="text-current" />
                   <div className="ml-2">Delete</div>

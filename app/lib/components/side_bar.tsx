@@ -60,16 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onNoteSelect }) => {
     fetchUserMessages();
   }, []);
 
-  const handleSearch = (searchQuery: string) => {
-    toast("Demo Note", {
-      description: "Reminder you cannot save in Demo mode.",
-      duration: 4000,
-    });
-    toast("Demo Note", {
-      description: "Feel free to play around all you like!",
-      duration: 4000,
-    });
-    
+  const handleSearch = (searchQuery: string) => { 
     if (!searchQuery.trim()) {
       setFilteredNotes(notes);
       return;
