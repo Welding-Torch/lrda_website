@@ -1,15 +1,17 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Input } from "@/components/ui/input";
+import { useGoogleMaps } from '../utils/GoogleMapsContext';
 
 type SearchBarProps = {
   onSearch: (address: string, lat?: number, lng?: number) => void;
-  isLoaded: boolean; // Prop to indicate if the Google Maps API is loaded
 };
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoaded }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [searchText, setSearchText] = useState<string>('');
   const [suggestions, setSuggestions] = useState<google.maps.places.AutocompletePrediction[]>([]);
   const autocompleteServiceRef = useRef<google.maps.places.AutocompleteService | null>(null);
+
+  const { isMapsApiLoaded } = useGoogleMaps();
 
   const loadAutocompleteService = useCallback(() => {
     console.log('loadAutocompleteService called');
@@ -25,11 +27,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoaded }) => {
   }, []);
 
   useEffect(() => {
-    console.log('isLoaded:', isLoaded); // Log the isLoaded state
-    if (isLoaded) {
+    if (isMapsApiLoaded) {
       loadAutocompleteService();
     }
-  }, [isLoaded, loadAutocompleteService]);
+  }, [isMapsApiLoaded, loadAutocompleteService]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
@@ -59,7 +60,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoaded }) => {
 
   const handleSelectSuggestion = useCallback((placeId: string) => {
     console.log('Handling suggestion select:', placeId); // Log selection of a suggestion
-    if (isLoaded) {
+    if (isMapsApiLoaded) {
       const placesService = new google.maps.places.PlacesService(document.createElement('div'));
       placesService.getDetails({ placeId }, (result, status) => {
         console.log('getDetails status:', status); // Log the status of the details fetch
@@ -73,7 +74,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoaded }) => {
         }
       });
     }
-  }, [onSearch, isLoaded]);
+  }, [onSearch, isMapsApiLoaded]);
   
 
   return (

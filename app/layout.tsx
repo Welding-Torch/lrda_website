@@ -19,13 +19,13 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
     <html lang="en">
       <head />
       <body>
-      <GoogleMapsProvider>
+     
         <Navbar /> 
         <NextAppDirEmotionCacheProvider options={{ key: "css" }}>
           {children}
         </NextAppDirEmotionCacheProvider>
         <Toaster />
-        </GoogleMapsProvider>
+   
       </body>
     </html>
   );

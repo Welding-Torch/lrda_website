@@ -26,7 +26,7 @@ import {
 import { toast } from "sonner";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import { getItem, setItem } from "../../utils/async_storage";
-import { useGoogleMaps } from '../../utils/GoogleMapsContext';
+import { GoogleMapsProvider, useGoogleMaps } from '../../utils/GoogleMapsContext';
 
 
 interface Location {
@@ -65,7 +65,7 @@ const Page = () => {
 
   const user = User.getInstance();
 
-  const isLoaded = useGoogleMaps();
+  const isMapsApiLoaded = useGoogleMaps();
 
   useEffect(() => {
     let isSubscribed = true;
@@ -185,7 +185,7 @@ const Page = () => {
 
   // useEffect that creates and updates Markers and MarkerClusters
   useEffect(() => {
-    if (isLoaded && mapRef.current && filteredNotes.length > 0) {
+    if (isMapsApiLoaded && mapRef.current && filteredNotes.length > 0) {
       const tempMarkers = new Map();
 
       const attachMarkerEvents = (marker: google.maps.Marker, note: Note) => {
@@ -239,7 +239,7 @@ const Page = () => {
         }
       };
     }
-  }, [isLoaded, filteredNotes, mapRef.current]);
+  }, [isMapsApiLoaded, filteredNotes, mapRef.current]);
 
   const handleMapClick = () => {
     if (currentPopup) {
@@ -540,7 +540,9 @@ const Page = () => {
           minSize={29}
           className="flex-grow min-w-[320px]"
         >
-          {isLoaded && (
+          {isMapsApiLoaded && (
+            <GoogleMapsProvider>
+
             <GoogleMap
               mapContainerStyle={{ width: "100%", height: "100%" }}
               center={mapCenter}
@@ -557,7 +559,7 @@ const Page = () => {
               <div className="absolute flex flex-row mt-3 w-full h-10 justify-between z-10">
                 <div className="flex flex-row w-[30vw] left-0 z-10 m-5 align-center items-center">
                   <div className="min-w-[80px] mr-3">
-                    <SearchBar onSearch={handleSearch} isLoaded={isLoaded} />
+                    <SearchBar onSearch={handleSearch} />
                   </div>
                   {isLoggedIn ? (
                     <div className="flex flex-row justify-evenly items-center">
@@ -593,6 +595,7 @@ const Page = () => {
                 );
               })} */}
             </GoogleMap>
+            </GoogleMapsProvider>
           )}
         </ResizablePanel>
         <ResizableHandle withHandle />
